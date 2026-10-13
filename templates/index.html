@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Academic Advisor</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f3f5f9;margin:0;padding:24px}
+    .card{max-width:480px;margin:auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+    h2{margin-top:0;color:#1f3a68}
+    label{display:block;margin:14px 0 4px;font-size:14px;color:#444}
+    input{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box}
+    button{margin-top:20px;width:100%;padding:11px;background:#1f3a68;color:#fff;border:0;border-radius:6px;font-size:16px;cursor:pointer}
+    button:hover{background:#2c5299}
+    .result{margin-top:24px;padding:16px;background:#eef3fb;border-radius:8px}
+    .error{margin-top:16px;color:#b00020}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>AI Academic Advisor</h2>
+    <form method="POST" action="/predict">
+      <label>Previous CGPA (0 - 5)</label>
+      <input name="prev_cgpa" type="number" step="0.01" min="0" max="5" required>
+      <label>Study hours per week</label>
+      <input name="study_hours" type="number" min="0" max="80" required>
+      <label>Attendance (%)</label>
+      <input name="attendance" type="number" min="0" max="100" required>
+      <label>Courses failed</label>
+      <input name="courses_failed" type="number" min="0" required>
+      <label>Sleep hours per night</label>
+      <input name="sleep_hours" type="number" min="0" max="24" required>
+      <button type="submit">Get Advice</button>
+    </form>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    {% if standing %}
+    <div class="result">
+      <h3>Predicted standing: {{ standing }}</h3>
+      <ul>{% for a in advice %}<li>{{ a }}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
